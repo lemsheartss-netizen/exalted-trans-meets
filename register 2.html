@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Exalted Trans Meets</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #0f0f1a; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .form-container { background: #1a1a2e; padding: 40px; border-radius: 16px; max-width: 420px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    input, select { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; background: #16213e; color: white; font-size: 1rem; }
+    .btn { width: 100%; padding: 14px; background: #e91e63; color: white; border: none; border-radius: 50px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 10px; }
+    .btn:hover { background: #ff4081; }
+    .g-recaptcha { margin: 15px 0; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2 style="text-align:center; margin-bottom:20px;">Create Your Account ✨</h2>
+    <form id="regForm">
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <input type="text" placeholder="Choose Username" required>
+      <input type="password" placeholder="Create Password" required>
+      <input type="password" placeholder="Confirm Password" required>
+      
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE"></div>
+      
+      <button type="button" class="btn" onclick="submitForm()">Join & Connect with Stars via Trillian</button>
+    </form>
+    <p style="text-align:center; margin-top:20px; font-size:0.9rem;">
+      Already have an account? <a href="#" style="color:#e91e63;">Log in</a>
+    </p>
+  </div>
+
+  <script>
+    function submitForm() {
+      const recaptchaResponse = grecaptcha.getResponse();
+      if (recaptchaResponse.length === 0) {
+        alert("Please complete the reCAPTCHA verification.");
+        return;
+      }
+      
+      // Demo success
+      alert("✅ Registration Successful! Welcome to Exalted Trans Meets 💖\n\nYou can now chat with stars on Trillian.");
+      window.location.href = "https://trillian.im/"; // Replace with your actual Trillian link
+    }
+  </script>
+</body>
+</html>

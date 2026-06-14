@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exalted Trans Meets ✨ | Meet Beautiful Stars</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #0f0f1a; color: #fff; }
+    header { background: linear-gradient(#667eea, #764ba2); padding: 20px; text-align: center; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 40px; }
+    .card { background: #1a1a2e; border-radius: 12px; overflow: hidden; text-align: center; transition: 0.3s; cursor: pointer; }
+    .card:hover { transform: scale(1.05); }
+    .card img { width: 100%; height: 220px; object-fit: cover; }
+    .card h3 { margin: 10px 0; }
+    .btn { padding: 12px 24px; background: #e91e63; color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; width: 90%; margin: 10px auto; display: block; }
+
+    /* Modal */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; overflow-y: auto; }
+    .modal-content { max-width: 900px; margin: 40px auto; background: #1a1a2e; border-radius: 16px; padding: 20px; }
+    .close { float: right; font-size: 28px; cursor: pointer; color: #fff; }
+    .tabs { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
+    .tab { padding: 10px 20px; cursor: pointer; border-bottom: 3px solid transparent; }
+    .tab.active { border-bottom: 3px solid #e91e63; color: #e91e63; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+    .gallery-grid img, .gallery-grid video { width: 100%; border-radius: 8px; cursor: pointer; }
+    .video-container { position: relative; padding-top: 56.25%; } /* 16:9 */
+    .video-container iframe, .video-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌟 Exalted Trans Meets</h1>
+    <p>Browse stunning stars • Join to connect privately via Trillian</p>
+  </header>
+
+  <div class="gallery" id="starsGallery"></div>
+
+  <!-- Modal -->
+  <div id="starModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">×</span>
+      <h2 id="modalStarName"></h2>
+      
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(0)">Photos (10+)</div>
+        <div class="tab" onclick="switchTab(1)">Videos (5+)</div>
+      </div>
+
+      <div id="photosTab" class="gallery-grid"></div>
+      <div id="videosTab" class="gallery-grid" style="display:none;"></div>
+
+      <button class="btn" onclick="goToRegister()">Meet This Star via Trillian →</button>
+    </div>
+  </div>
+
+  <script>
+    const stars = [
+      {
+        name: "Pierbi",
+        profile: "https://www.twpornstars.com/pierbii",
+        img: "https://via.placeholder.com/300x300/e91e63/fff?text=Pierbi",
+        photos: [
+          "https://via.placeholder.com/600x400/667eea/fff?text=Pierbi+1",
+          "https://via.placeholder.com/600x400/764ba2/fff?text=Pierbi+2",
+          "https://via.placeholder.com/600x400/e91e63/fff?text=Pierbi+3",
+          "https://via.placeholder.com/600x400/ff4081/fff?text=Pierbi+4",
+          "https://via.placeholder.com/600x400/667eea/fff?text=Pierbi+5",
+          "https://via.placeholder.com/600x400/764ba2/fff?text=Pierbi+6",
+          "https://via.placeholder.com/600x400/e91e63/fff?text=Pierbi+7",
+          "https://via.placeholder.com/600x400/ff4081/fff?text=Pierbi+8",
+          "https://via.placeholder.com/600x400/667eea/fff?text=Pierbi+9",
+          "https://via.placeholder.com/600x400/764ba2/fff?text=Pierbi+10"
+        ],
+        videos: [
+          "https://www.youtube.com/embed/dQw4w9wgxcq",
+          "https://www.youtube.com/embed/dQw4w9wgxcq",
+          "https://www.youtube.com/embed/dQw4w9wgxcq",
+          "https://www.youtube.com/embed/dQw4w9wgxcq",
+          "https://www.youtube.com/embed/dQw4w9wgxcq"
+        ]
+      },
+      {
+        name: "Aurora Skye",
+        profile: "https://www.twpornstars.com/spxrklybrat",
+        img: "https://via.placeholder.com/300x300/764ba2/fff?text=Aurora",
+        photos: Array(10).fill("https://via.placeholder.com/600x400/764ba2/fff?text=Aurora+Photo"),
+        videos: Array(5).fill("https://www.youtube.com/embed/dQw4w9wgxcq")
+      },
+      {
+        name: "Ava Venom",
+        profile: "https://www.twpornstars.com/AvaVenom",
+        img: "https://via.placeholder.com/300x300/e91e63/fff?text=Ava",
+        photos: Array(10).fill("https://via.placeholder.com/600x400/e91e63/fff?text=Ava+Photo"),
+        videos: Array(5).fill("https://www.youtube.com/embed/dQw4w9wgxcq")
+      }
+      // Add more stars here by copying the structure above
+    ];
+
+    const gallery = document.getElementById('starsGallery');
+    stars.forEach((star, index) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${star.img}" alt="${star.name}">
+        <h3>${star.name}</h3>
+        <button class="btn" onclick="showStar(${index})">View Gallery & Meet →</button>
+      `;
+      gallery.appendChild(card);
+    });
+
+    let currentStar = null;
+
+    function showStar(index) {
+      currentStar = stars[index];
+      document.getElementById('modalStarName').textContent = currentStar.name;
+      
+      const photosDiv = document.getElementById('photosTab');
+      photosDiv.innerHTML = currentStar.photos.map(url => 
+        `<img src="${url}" onclick="window.open('${url}', '_blank')">`
+      ).join('');
+      
+      const videosDiv = document.getElementById('videosTab');
+      videosDiv.innerHTML = currentStar.videos.map(url => `
+        <div class="video-container">
+          <iframe src="${url}" frameborder="0" allowfullscreen></iframe>
+        </div>
+      `).join('');
+      
+      document.getElementById('starModal').style.display = 'block';
+      switchTab(0);
+    }
+
+    function closeModal() {
+      document.getElementById('starModal').style.display = 'none';
+    }
+
+    function switchTab(tab) {
+      document.getElementById('photosTab').style.display = tab === 0 ? 'grid' : 'none';
+      document.getElementById('videosTab').style.display = tab === 1 ? 'grid' : 'none';
+      
+      document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.toggle('active', i === tab);
+      });
+    }
+
+    function goToRegister() {
+      closeModal();
+      window.location.href = 'register.html';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('starModal');
+      if (event.target === modal) closeModal();
+    };
+  </script>
+</body>
+</html>
